@@ -9,7 +9,7 @@
 
 body {
   background-color: #0f172a;
-  background-image: 
+  background-image:
     radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.2), transparent 25%),
     radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.2), transparent 25%),
     radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.15), transparent 30%);
@@ -232,4 +232,120 @@ body {
   background: rgba(30, 41, 59, 0.3);
   border-radius: 16px;
   border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Tablet (≤ 640px) ─────────────────────────────────── */
+@media (max-width: 640px) {
+  body {
+    align-items: flex-start;
+  }
+
+  .app-container {
+    align-items: flex-start;
+    padding: 16px 12px 32px;
+    min-height: 100vh;
+  }
+
+  .glass-card {
+    padding: 28px 20px;
+    border-radius: 20px;
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 2rem;
+    margin-bottom: 22px;
+    letter-spacing: -0.5px;
+  }
+
+  .input-container {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .task-input {
+    padding: 13px 14px;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+
+  .add-button {
+    padding: 13px 20px;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+
+  .counters {
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+
+  .task-item {
+    padding: 14px 16px;
+    border-radius: 14px;
+  }
+
+  .task-list {
+    gap: 10px;
+  }
+
+  .task-text {
+    font-size: 1rem;
+  }
+
+  .task-checkbox {
+    width: 22px;
+    height: 22px;
+  }
+
+  .task-checkbox:checked::after {
+    font-size: 14px;
+  }
+
+  .delete-button {
+    opacity: 1;
+    /* always visible on touch devices */
+    padding: 10px;
+  }
+
+  .empty-state {
+    padding: 32px 0;
+    font-size: 0.95rem;
+  }
+}
+
+/* ─── Small Mobile (≤ 380px) ──────────────────────────── */
+@media (max-width: 380px) {
+  .glass-card {
+    padding: 22px 14px;
+    border-radius: 16px;
+  }
+
+  .title {
+    font-size: 1.65rem;
+    margin-bottom: 18px;
+  }
+
+  .task-input {
+    padding: 11px 12px;
+    font-size: 0.92rem;
+  }
+
+  .add-button {
+    padding: 11px 16px;
+    font-size: 0.88rem;
+  }
+
+  .task-item {
+    padding: 12px 12px;
+  }
+
+  .task-text {
+    font-size: 0.92rem;
+  }
+
+  .task-content {
+    gap: 10px;
+  }
 }
