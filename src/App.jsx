@@ -5,17 +5,17 @@ function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/tasks")
-      .then((res) => res.json())
-      .then((data) => setTasks(data))
-      .catch((err) => console.error(err));
-  }, []);
+useEffect(() => {
+  fetch("https://task-app-0woj.onrender.com/tasks")
+    .then((res) => res.json())
+    .then((data) => setTasks(data))
+    .catch((err) => console.error(err));
+}, []);
 
   const addTask = () => {
     if (task.trim() === "") return;
 
-    fetch("http://localhost:5000/tasks", {
+    fetch("https://task-app-0woj.onrender.com/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ function App() {
   };
 
   const deleteTask = (id) => {
-    fetch(`http://localhost:5000/tasks/${id}`, {
+    fetch(`https://task-app-0woj.onrender.com/tasks/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -39,7 +39,7 @@ function App() {
   };
 
   const toggleTask = (taskToToggle) => {
-    fetch(`http://localhost:5000/tasks/${taskToToggle._id}`, {
+    fetch(`https://task-app-0woj.onrender.com/tasks/${taskToToggle._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
