@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import "./index.css";
 
-const CATEGORIES = ["Personal", "Work", "Health", "Study", "Other"];
-
 function App() {
   const [task, setTask] = useState("");
-  const [category, setCategory] = useState(CATEGORIES[0]);
   const [tasks, setTasks] = useState([]);
-  const [activeFilter, setActiveFilter] = useState("All");
 
   useEffect(() => {
     fetch("http://localhost:5000/tasks")
@@ -24,8 +20,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-      // Note: Passing category to backend. Existing tasks might lack this field initially!
-      body: JSON.stringify({ text: task, completed: false, category }),
+      body: JSON.stringify({ text: task, completed: false }),
     })
       .then((res) => res.json())
       .then((data) => setTasks(data))
@@ -58,18 +53,13 @@ function App() {
       .catch((err) => console.error(err));
   };
 
-  // Filter tasks based on active category
-  const filteredTasks = tasks.filter((t) =>
-    activeFilter === "All" ? true : t.category === activeFilter
-  );
-
   return (
     <div className="app-container">
       <div className="glass-card">
         <h1 className="title">My Task App</h1>
 
         {/* INPUT */}
-        <div className="input-group">
+        <div className="input-container">
           <input
             type="text"
             className="task-input"
@@ -78,57 +68,25 @@ function App() {
             onChange={(e) => setTask(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addTask()}
           />
-          <select
-            className="category-select"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
           <button className="add-button" onClick={addTask}>
             Add
           </button>
         </div>
 
-        {/* CATEGORY FILTERS */}
-        <div className="filter-scroll-container">
-          <div
-            className={`filter-pill ${activeFilter === "All" ? "active" : ""}`}
-            onClick={() => setActiveFilter("All")}
-          >
-            All
-          </div>
-          {CATEGORIES.map((cat) => (
-            <div
-              key={cat}
-              className={`filter-pill ${activeFilter === cat ? "active" : ""}`}
-              onClick={() => setActiveFilter(cat)}
-            >
-              {cat}
-            </div>
-          ))}
-        </div>
-
         {/* COUNTERS */}
         <div className="counters">
-          <span>Results: {filteredTasks.length}</span>
-          <span>Done: {tasks.filter((t) => t.completed).length}/{tasks.length}</span>
+          <span>Total: {tasks.length}</span>
+          <span>Done: {tasks.filter((t) => t.completed).length}</span>
         </div>
 
         {/* TASK LIST */}
-        {filteredTasks.length === 0 ? (
+        {tasks.length === 0 ? (
           <div className="empty-state">
-            {activeFilter === "All"
-              ? "All caught up! ✨ No tasks here."
-              : `No ${activeFilter} tasks yet.`}
+            All caught up! ✨ No tasks here.
           </div>
         ) : (
           <ul className="task-list">
-            {filteredTasks.map((t) => (
+            {tasks.map((t) => (
               <li key={t._id} className="task-item">
                 <div className="task-content">
                   <div className="task-checkbox-container">
@@ -140,16 +98,11 @@ function App() {
                     />
                   </div>
 
-                  <div className="task-text-group">
-                    <span
-                      className={`task-text ${t.completed ? "completed" : ""}`}
-                    >
-                      {t.text}
-                    </span>
-                    {(t.category) && (
-                      <span className="task-category-badge">{t.category}</span>
-                    )}
-                  </div>
+                  <span
+                    className={`task-text ${t.completed ? "completed" : ""}`}
+                  >
+                    {t.text}
+                  </span>
                 </div>
 
                 <button
